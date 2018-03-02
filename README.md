@@ -1,8 +1,13 @@
 # Brother John's Principles for Human Software Design
 This document lays out some principles for good software design practices.
 
-* One
+* Limits in software should not be arbitrary, but should rather match the limits of the hardware upon which it is implemented. Therefore, file sizes, indentifier lengths, key lengths, database storage units, text buffers, etc., should all be limited only by available memory and fixed storage. Fixed buffers should be avoided, although it is allowable for software to optimize behavior for units of data that *do* happen to fit within a fixed buffer. However, software should be able to progressively de-optimize its performance characteristics as large objects are applied to it, i.e., by moving storage from fixed buffers in the data segment or stack variables into the heap (or free store, if you favor the Stroustrup terminology).
 
-* Two
+* So-called "plain" text, as a storage format, is always lossy. Even a simple textual document betrays structural elements that are lost in byte-oriented systems.  Items such as sentences, paragraphs, quotations, etc., lose their semantic significance in plaintext context, and source code is especially vulnerable to this weakness, as version control systems will mark semantically insignificant changes--such as adding or removing whitespace--as a new revision. An operating system should provide storage and retrieval subsystems of sufficient richness to express, parse, and render the full semantic meaning for most types of documents, and its ABI should be rich enough to extend its semantic understanding of objects stored within it by querying the application for such an understanding through standard, well-defined interfaces. For instance, the C++ programmer should be able to return an entire object to the shell, rather than just an integer, and this sort of transparent semantic richness should be not only limited to data crossing process boundaries, but should extend to networked resources as well. One system should be able to communicate with another remote system without an explicit, intervening serialization or deserialization step.
 
-* Three
+*  Minimizing complexity to the programmer should never increase complexity to the user. Reduction of complexity should never drive the programmer to avoid the implementation of powerful semantic abstractions. A good example of this is front-end web development: browsers should natively provide abstractions for user interface elements that are needed in all but the most obscure edge cases, rather than forcing the developer to think in the semantically thin abstractions of HTML and CSS. To wit, this widget is a property list, not a table element inside of a div.
+
+
+
+
+
